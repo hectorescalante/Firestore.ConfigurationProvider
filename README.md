@@ -9,7 +9,6 @@
 | FIRESTORECONFIG_PROJECTID | "" | The google cloud project identifier where the firestore service exists | yes |
 | FIRESTORECONFIG_APPLICATION | AppDomain.CurrentDomain.FriendlyName | Name of the application  | no |
 | FIRESTORECONFIG_STAGE | ASPNETCORE_ENVIRONMENT | Name of the current environment  | yes |
-| FIRESTORECONFIG_MACHINE | Environment.MachineName | Name of the current host | no |
 
 ## Add Firestore Configuration in Program class
 ```
