@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.Configuration.Firestore.Core.Helpers;
+﻿using Firestore.ConfigurationProvider.Core.Helpers;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Microsoft.Extensions.Configuration.Firestore.Core
+namespace Firestore.ConfigurationProvider.Core
 {
   internal static class ApplicationSettingsExtensions
   {

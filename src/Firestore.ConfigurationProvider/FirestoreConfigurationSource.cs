@@ -1,8 +1,7 @@
-﻿using Microsoft.Extensions.Configuration.Json;
-using System.Runtime.CompilerServices;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 
-[assembly: InternalsVisibleTo("Tests")]
-namespace Microsoft.Extensions.Configuration.Firestore.Core
+namespace Firestore.ConfigurationProvider
 {
   internal class FirestoreConfigurationSource : JsonStreamConfigurationSource
   {

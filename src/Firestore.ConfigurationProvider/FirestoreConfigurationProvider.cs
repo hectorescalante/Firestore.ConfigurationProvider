@@ -1,14 +1,17 @@
-﻿using Microsoft.Extensions.Configuration.Firestore.Infrastructure;
+﻿using Firestore.ConfigurationProvider.Core;
+using Firestore.ConfigurationProvider.Infrastructure;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 
-namespace Microsoft.Extensions.Configuration.Firestore.Core
+[assembly: InternalsVisibleTo("Firestore.ConfigurationProvider.Test")]
+namespace Firestore.ConfigurationProvider
 {
   internal class FirestoreConfigurationProvider : JsonStreamConfigurationProvider
   {

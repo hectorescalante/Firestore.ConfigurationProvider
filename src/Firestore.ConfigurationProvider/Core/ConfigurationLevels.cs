@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Extensions.Configuration.Firestore.Core
+﻿namespace Firestore.ConfigurationProvider.Core
 {
   internal enum ConfigurationLevels
   {

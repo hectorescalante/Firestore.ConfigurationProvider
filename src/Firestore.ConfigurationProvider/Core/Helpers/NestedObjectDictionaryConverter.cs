@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Extensions.Configuration.Firestore.Core.Helpers
+[assembly: InternalsVisibleTo("Firestore.ConfigurationProvider.Tests")]
+namespace Firestore.ConfigurationProvider.Core.Helpers
 {
   internal class NestedObjectDictionaryConverter : JsonConverter<Dictionary<string, object>>
   {

@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Extensions.Configuration.Firestore.Core.Abstractions
+﻿namespace Firestore.ConfigurationProvider.Core.Abstractions
 {
   internal interface IFileManager
   {

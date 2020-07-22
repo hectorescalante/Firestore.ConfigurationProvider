@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json;
 
-namespace Microsoft.Extensions.Configuration.Firestore.Core
+namespace Firestore.ConfigurationProvider
 {
   public class FirestoreConfigurationOptions
   {

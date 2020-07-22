@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
-namespace Microsoft.Extensions.Configuration.Firestore.Core.Abstractions
+namespace Firestore.ConfigurationProvider.Core.Abstractions
 {
   internal interface IFirestoreConnectionManager
   {

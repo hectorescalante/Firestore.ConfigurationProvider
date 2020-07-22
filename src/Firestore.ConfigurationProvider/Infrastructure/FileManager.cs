@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.Configuration.Firestore.Core.Abstractions;
+﻿using Firestore.ConfigurationProvider.Core.Abstractions;
 using System.IO;
 using System.Text;
 
-namespace Microsoft.Extensions.Configuration.Firestore.Infrastructure
+namespace Firestore.ConfigurationProvider.Infrastructure
 {
   internal class FileManager : IFileManager
   {

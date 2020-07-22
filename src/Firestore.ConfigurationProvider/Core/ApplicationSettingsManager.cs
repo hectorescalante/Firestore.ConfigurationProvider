@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration.Firestore.Core.Abstractions;
+﻿using Firestore.ConfigurationProvider.Core.Abstractions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Concurrent;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.Extensions.Configuration.Firestore.Core
+namespace Firestore.ConfigurationProvider.Core
 {
   internal class ApplicationSettingsManager
   {

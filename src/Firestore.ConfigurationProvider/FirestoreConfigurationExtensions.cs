@@ -1,4 +1,6 @@
-﻿namespace Microsoft.Extensions.Configuration.Firestore.Core
+﻿using Microsoft.Extensions.Configuration;
+
+namespace Firestore.ConfigurationProvider
 {
   public static class FirestoreConfigurationExtensions
   {
