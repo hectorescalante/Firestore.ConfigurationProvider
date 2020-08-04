@@ -24,7 +24,7 @@
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "FIRESTORECONFIG_PROJECTID": "bdtg-shared-core-prod"
+        "FIRESTORECONFIG_PROJECTID": "gcp-project"
       }
     }
   }

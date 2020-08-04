@@ -4,6 +4,7 @@
   {
     Application,
     Stage,
-    Machine
+    Machine,
+    Tag
   }
 }

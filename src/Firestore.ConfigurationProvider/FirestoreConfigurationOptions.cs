@@ -22,10 +22,12 @@ namespace Firestore.ConfigurationProvider
           SettingsCollection = "ApplicationSettings";
           StagesCollection = "Stages";
           MachinesCollection = "Machines";
+          TagsCollection = "Tags";
           SettingsFileName = "appsettings.json";
           ApplicationName = Environment.GetEnvironmentVariable("FIRESTORECONFIG_APPLICATION") ?? AppDomain.CurrentDomain.FriendlyName;
           ReleaseStage = Environment.GetEnvironmentVariable("FIRESTORECONFIG_STAGE") ?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? throw new ArgumentNullException("Environment");
           MachineName = Environment.MachineName;
+          Tag = Environment.GetEnvironmentVariable("FIRESTORECONFIG_TAG") ?? "Default";
         }
       }
       catch (Exception ex)
@@ -41,15 +43,17 @@ namespace Firestore.ConfigurationProvider
     public string SettingsCollection { get; set; }
     public string StagesCollection { get; set; }
     public string MachinesCollection { get; set; }
+    public string TagsCollection { get; set; }
     public string ApplicationName { get; set; }
     public string SettingsFilePath { get; set; }
     public string SettingsFileName { get; set; }
     public string ReleaseStage { get; set; }
     public string MachineName { get; set; }
-    public string MachinesDocumentName { get; set; }
+    public string Tag { get; set; }
 
     public string GetApplicationDocumentPath() => $"{SettingsCollection}/{ApplicationName}";
     public string GetStageDocumentPath() => $"{SettingsCollection}/{ApplicationName}/{StagesCollection}/{ReleaseStage}";
     public string GetMachineDocumentPath() => $"{SettingsCollection}/{ApplicationName}/{StagesCollection}/{ReleaseStage}/{MachinesCollection}/{MachineName}";
+    public string GetTagDocumentPath() => $"{SettingsCollection}/{ApplicationName}/{StagesCollection}/{ReleaseStage}/{TagsCollection}/{Tag}";
   }
 }

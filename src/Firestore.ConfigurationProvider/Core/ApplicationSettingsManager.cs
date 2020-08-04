@@ -16,8 +16,8 @@ namespace Firestore.ConfigurationProvider.Core
     private readonly IFileManager _fileManager;
 
     public ConcurrentDictionary<string, string> ConfigData { get; private set; } = new ConcurrentDictionary<string, string>();
-    public Func<string, IDictionary<string, string>> JsonSettingsToDictionary { get; private set; }
-    public Action<ConcurrentDictionary<string, string>> ReloadSettingsOnProvider { get; private set; }
+    public Func<string, IDictionary<string, string>> JsonSettingsToDictionarySettings { get; private set; }
+    public Action<ConcurrentDictionary<string, string>> ReloadSettings { get; private set; }
 
     public ApplicationSettingsManager(ILogger logger, FirestoreConfigurationOptions options, IFirestoreConnectionManager connectionManager, IFileManager fileManager)
     {
@@ -61,10 +61,10 @@ namespace Firestore.ConfigurationProvider.Core
       }
     }
 
-    public void CreateListeners(Func<string, IDictionary<string, string>> jsonSettingsToDictionaryCallback, Action<ConcurrentDictionary<string, string>> reloadSettingsOnProviderCallback)
+    public void CreateListeners(Func<string, IDictionary<string, string>> jsonSettingsToDictionarySettingsCallback, Action<ConcurrentDictionary<string, string>> reloadSettingsCallback)
     {
-      JsonSettingsToDictionary = jsonSettingsToDictionaryCallback;
-      ReloadSettingsOnProvider = reloadSettingsOnProviderCallback;
+      JsonSettingsToDictionarySettings = jsonSettingsToDictionarySettingsCallback;
+      ReloadSettings = reloadSettingsCallback;
 
       _logger.LogInformation("Creating listeners...");
       _connectionManager.CreateListeners(LoadDocumentSettingsOnChangeAsync);
@@ -81,12 +81,12 @@ namespace Firestore.ConfigurationProvider.Core
         _logger.LogInformation($"Loading Documents by Level. Current:{configurationLevel}");
         var remoteSettingsDocument = await _connectionManager.GetDocumentFieldsAsync(configurationLevel);
         //Use this FirestoreConfigurationProvider method to convert the json settings into a dictionary with IConfiguration format.
-        var dataDictionary = JsonSettingsToDictionary(remoteSettingsDocument.ToJson());
+        var dataDictionary = JsonSettingsToDictionarySettings(remoteSettingsDocument.ToJson());
         //Add settings to a centralized final dictionary.
         dataDictionary.ToList().ForEach(item => ConfigData.AddOrUpdate(item.Key.ToLower(), item.Value, (key, value) => value = item.Value));
       }
       //Use this FirestoreConfigurationProvider method in order to have access the private Data Dictionary and refresh the token.
-      ReloadSettingsOnProvider(ConfigData);
+      ReloadSettings(ConfigData);
       _logger.LogInformation($"End of detected change load! {DateTime.Now}");
     }
   }

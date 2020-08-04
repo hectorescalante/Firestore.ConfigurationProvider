@@ -50,6 +50,7 @@ namespace Firestore.ConfigurationProvider.Infrastructure
       ConfigurationDocuments.Add(ConfigurationLevels.Application, FirestoreClient.Document(_options.GetApplicationDocumentPath()));
       ConfigurationDocuments.Add(ConfigurationLevels.Stage, FirestoreClient.Document(_options.GetStageDocumentPath()));
       ConfigurationDocuments.Add(ConfigurationLevels.Machine, FirestoreClient.Document(_options.GetMachineDocumentPath()));
+      ConfigurationDocuments.Add(ConfigurationLevels.Tag, FirestoreClient.Document(_options.GetTagDocumentPath()));
 
       ConfigurationDocuments.ToList().ForEach(d =>
         ConfigurationListeners.Add(d.Key, d.Value.Listen(async snapshot =>
