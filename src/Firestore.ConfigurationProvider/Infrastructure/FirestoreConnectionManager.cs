@@ -28,7 +28,7 @@ namespace Firestore.ConfigurationProvider.Infrastructure
 
     public void Setup()
     {
-      _logger.LogInformation($"Creating client for {_options.ProjectId}...");
+      _logger.LogDebug($"Creating client for {_options.ProjectId}...");
       FirestoreClient = _firestoreClients.GetOrAdd(_options.ProjectId, value => { return FirestoreDb.Create(_options.ProjectId); });
     }
 

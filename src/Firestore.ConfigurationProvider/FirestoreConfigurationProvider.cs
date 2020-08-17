@@ -1,4 +1,5 @@
 ﻿using Firestore.ConfigurationProvider.Core;
+using Firestore.ConfigurationProvider.Core.Helpers;
 using Firestore.ConfigurationProvider.Infrastructure;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Logging;
@@ -32,7 +33,7 @@ namespace Firestore.ConfigurationProvider
     {
       if (_configurationOptions.IsEnabled)
       {
-        _logger.LogInformation($"Loading remote configuration... {DateTime.Now}");
+        _logger.LogDebug($"Loading remote configuration... {DateTime.Now}");
         var asmLogger = _loggerFactory.CreateLogger<ApplicationSettingsManager>();
         var fcmLogger = _loggerFactory.CreateLogger<FirestoreConnectionManager>();
         _applicationSettings = new ApplicationSettingsManager(asmLogger, _configurationOptions, new FirestoreConnectionManager(fcmLogger, _configurationOptions), new FileManager());
@@ -41,7 +42,7 @@ namespace Firestore.ConfigurationProvider
       }
       else
       {
-        _logger.LogInformation("Remote configuration is disabled!");
+        _logger.LogWarning("Remote configuration is disabled!");
       }
     }
 
@@ -49,7 +50,7 @@ namespace Firestore.ConfigurationProvider
     {
       try
       {
-        _logger.LogInformation($"Loading {jsonSettings}");
+        _logger.LogDebug($"Loading {jsonSettings}");
         Load(new MemoryStream(Encoding.UTF8.GetBytes(jsonSettings)));
       }
       catch (Exception ex)
@@ -64,15 +65,20 @@ namespace Firestore.ConfigurationProvider
     public void ReloadSettings(ConcurrentDictionary<string, string> remoteSettingsData)
     {
       _mutex.WaitOne();
+      
       //Assign the previous collected keys from all levels to the final Data dictionary.
       foreach (var item in remoteSettingsData)
       {
         if (Data.ContainsKey(item.Key)) { Data[item.Key] = item.Value; } else { Data.Add(item); };
       }
+
+      //Add flag to indicate that load is complete.
+      if (!Data.ContainsKey(LoadAwaiter.LoadStatus.Key)) { Data.Add(LoadAwaiter.LoadStatus); };
+
       _mutex.ReleaseMutex();
 
       //Refresh change token.
-      _logger.LogInformation("Refreshing token...");
+      _logger.LogDebug("Refreshing token...");
       OnReload();
     }
   }

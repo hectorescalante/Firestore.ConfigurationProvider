@@ -35,7 +35,7 @@ namespace Firestore.ConfigurationProvider
         _logger.LogError(ex, ex.Message);
         IsEnabled = false;
       }
-      _logger.LogInformation($"FirestoreConfigurationOptions: {JsonSerializer.Serialize(this, new JsonSerializerOptions() { WriteIndented = true })}");
+      _logger.LogDebug($"FirestoreConfigurationOptions: {JsonSerializer.Serialize(this, new JsonSerializerOptions() { WriteIndented = true })}");
     }
 
     public bool IsEnabled { get; set; }

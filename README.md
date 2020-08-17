@@ -18,7 +18,7 @@
 ```
   public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration((hotContext, config) =>
+            .ConfigureAppConfiguration((hostContext, config) =>
             {
               config.AddFirestoreConfiguration();
             })            

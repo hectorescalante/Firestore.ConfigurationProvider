@@ -29,23 +29,23 @@ namespace Firestore.ConfigurationProvider.Core
 
     public async Task Setup()
     {
-      _logger.LogInformation($"Begin setup... {DateTime.Now}");
+      _logger.LogDebug($"Begin setup... {DateTime.Now}");
 
       _connectionManager.Setup();
 
-      _logger.LogInformation($"Procesing AppSettings for {_options.ApplicationName}...");
+      _logger.LogDebug($"Procesing AppSettings for {_options.ApplicationName}...");
       await CreateAppSettingsDocument();
 
-      _logger.LogInformation($"Procesing StageSettings for {_options.ApplicationName}...");
+      _logger.LogDebug($"Procesing StageSettings for {_options.ApplicationName}...");
       await CreateStageSettingsDocument();
 
-      _logger.LogInformation($"End setup... {DateTime.Now}");
+      _logger.LogDebug($"End setup... {DateTime.Now}");
     }
     private async Task CreateAppSettingsDocument()
     {
       if (await _connectionManager.IsDocumentEmptyAsync(_options.GetApplicationDocumentPath()))
       {
-        _logger.LogInformation($"Creating setting from {_options.SettingsFilePath}{_options.SettingsFileName}");
+        _logger.LogDebug($"Creating setting from {_options.SettingsFilePath}{_options.SettingsFileName}");
         var remoteSettingsDocument = new ApplicationSettingsDocument();
         remoteSettingsDocument.SetData(_fileManager.GetFileContent($"{_options.SettingsFilePath}{_options.SettingsFileName}"));
         await _connectionManager.SaveAsync(_options.GetApplicationDocumentPath(), remoteSettingsDocument.Data.ToDictionary());
@@ -56,7 +56,7 @@ namespace Firestore.ConfigurationProvider.Core
       //Create stage document if not exists
       if (await _connectionManager.IsDocumentEmptyAsync(_options.GetStageDocumentPath()))
       {
-        _logger.LogInformation($"Creating {_options.StagesCollection} {_options.ReleaseStage}");
+        _logger.LogDebug($"Creating {_options.StagesCollection} {_options.ReleaseStage}");
         await _connectionManager.SaveAsync(_options.GetStageDocumentPath(), new Dictionary<string, object>());
       }
     }
@@ -72,13 +72,13 @@ namespace Firestore.ConfigurationProvider.Core
 
     public async Task LoadDocumentSettingsOnChangeAsync(ConfigurationLevels level, string snapshotId)
     {
-      _logger.LogInformation($"Change detected... {level} {snapshotId}");
+      _logger.LogInformation($"Change detected... Level: {level}, Document: {snapshotId}");
       //Remove all keys for a new load.
       ConfigData.Clear();
       //When a change is made in one level we must load all other levels in order to merge all settings ordered by relevance (application -> stage -> machine).
       foreach (var configurationLevel in _connectionManager.GetConfigurationDocumentLevels())
       {
-        _logger.LogInformation($"Loading Documents by Level. Current:{configurationLevel}");
+        _logger.LogDebug($"Loading Documents by Level. Current:{configurationLevel}");
         var remoteSettingsDocument = await _connectionManager.GetDocumentFieldsAsync(configurationLevel);
         //Use this FirestoreConfigurationProvider method to convert the json settings into a dictionary with IConfiguration format.
         var dataDictionary = JsonSettingsToDictionarySettings(remoteSettingsDocument.ToJson());
@@ -87,7 +87,7 @@ namespace Firestore.ConfigurationProvider.Core
       }
       //Use this FirestoreConfigurationProvider method in order to have access the private Data Dictionary and refresh the token.
       ReloadSettings(ConfigData);
-      _logger.LogInformation($"End of detected change load! {DateTime.Now}");
+      _logger.LogDebug($"End of detected change load! {DateTime.Now}");
     }
   }
 }
